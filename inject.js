@@ -16,7 +16,7 @@
     { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
     { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
     { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 3000 },
-    { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' }
+   
   ];
 
   const map = FIELD_MAP.slice();
