@@ -12,9 +12,7 @@
 
   const SESSIONS = {
     'Default': [
-      
-      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'input' },
-      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'select' },
+
       { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true },
@@ -28,6 +26,8 @@
 
       { selector: '[name="form:categoria_localidade_bairro_residencia"]', value: 'BAIRRO', type: 'input' },
       { selector: '[name="form:notificacao_paciente_endereco_bairro_id"]', value: '122', type: 'input' },
+
+      { selector: '[name="form:notificacao_paciente_endereco_zona"]', value: '1', type: 'select' }
     ],
     'Sintomas': [
       { selector: '[name="form:chikungunya_sinaisFebre"]', value: '1', type: 'input' },
