@@ -20,7 +20,7 @@
       { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true },
       { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' }
     ],
-    'Chikungunya': [
+    'Sintomas': [
       { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '2', type: 'input' },
