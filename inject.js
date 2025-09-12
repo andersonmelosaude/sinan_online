@@ -124,7 +124,8 @@
   sessionSelect.onchange = ()=>{currentSession = sessionSelect.value; map = SESSIONS[currentSession].slice(); if(panelVisible) renderList();};
 
   const gearBtn = document.getElementById('sa-gear');
-  gearBtn.onclick = ()=>{panelVisible = !paneconst closeBtn = document.getElementById('sa-close');
+  gearBtn.onclick = ()=>{panelVisible = !panelVisible; listEl.style.display = panelVisible ? 'block' : 'none'; if(panelVisible) renderList();};
+  const closeBtn = document.getElementById('sa-close');
   closeBtn.onclick = () => {
       panel.remove();  // remove o painel da página
       window.__simple_autofill_loaded = false; // permite reinicializar se quiser
