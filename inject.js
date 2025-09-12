@@ -67,6 +67,7 @@
       <button id='sa-fill' class='sa-btn'>Auto Preencher</button>
       <select id='sa-session'>${Object.keys(SESSIONS).map(s=>`<option value='${s}'>${s}</option>`).join('')}</select>
       <button id='sa-gear' class='sa-btn ghost'>⚙</button>
+      <button id='sa-close' class='sa-btn'>x</button>
     </div>
     <div id='sa-list'></div>
     <div class='sa-small'>Clique na engrenagem para editar campos da sessão atual.</div>
@@ -144,4 +145,5 @@
   };
 
   document.getElementById('sa-fill').onclick = fillAll;
+  document.getElementById('sa-close').onclick = panel.innerHTML='';
 })();
