@@ -12,7 +12,8 @@
 
   const SESSIONS = {
     'Default': [
-      { selector: '[name="form:richagravocomboboxField"]', value: '1', type: 'select' },
+      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'input' },
+      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'combo' },
       { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true },
