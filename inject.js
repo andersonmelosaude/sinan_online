@@ -22,11 +22,17 @@
       { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'select' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_id"]', value: '260290', type: 'input' },
+      
+      { selector: '[name="form:notificacao_paciente_endereco_bairro_noBairrocomboboxField"]', value: 'PONTE DOS CARVALHOS CENTRO - BAIRRO', type: 'input' },
+      { selector: '[name="form:notificacao_paciente_endereco_bairro_noBairrocomboboxField"]', value: 'PONTE DOS CARVALHOS CENTRO - BAIRRO', type: 'select' },
+
+      { selector: '[name="form:categoria_localidade_bairro_residencia"]', value: 'BAIRRO', type: 'input' },
+      { selector: '[name="form:notificacao_paciente_endereco_bairro_id"]', value: '122', type: 'input' },
     ],
     'Sintomas': [
-      { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'input' },
-      { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '2', type: 'input' },
-      { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisFebre"]', value: '1', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '1', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '1', type: 'input' },
       { selector: '[name="form:chikungunya_sinaisExantema"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_sinaisVomito"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_sinaisNausea"]', value: '2', type: 'input' },
