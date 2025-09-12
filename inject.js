@@ -53,7 +53,12 @@
   document.body.appendChild(panel);
 
   // state
-  const map = []; // {selector, value}
+  const FIELD_MAP = [
+  { selector: '[name="form:nuNotificacao"]', value: '12345' },
+  { selector: '[name="form:data"]', value: '2025-09-12' },
+  { selector: '[name="form:email"]', value: 'teste@example.com' }
+];
+  const map = FIELD_MAP.slice(); // {selector, value}
   const listEl = document.getElementById('sa-list');
   const selInput = document.getElementById('sa-selector');
   const valInput = document.getElementById('sa-value');
