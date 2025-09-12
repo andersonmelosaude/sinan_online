@@ -18,11 +18,10 @@
       { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true },
-      { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
+      { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
       { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'select' },
-      { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' },
-      
+      { selector: '[name="form:notificacao_paciente_endereco_municipio_id"]', value: '260290', type: 'input' },
     ],
     'Sintomas': [
       { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'input' },
