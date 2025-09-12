@@ -129,7 +129,7 @@
   closeBtn.onclick = () => {
       panel.remove();  // remove o painel da página
       window.__simple_autofill_loaded = false; // permite reinicializar se quiser
-  };lVisible; listEl.style.display = panelVisible ? 'block' : 'none'; if(panelVisible) renderList();};
+  };
 
   document.getElementById('sa-fill').onclick = fillAll;
 })();
