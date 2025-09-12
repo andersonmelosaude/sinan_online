@@ -21,7 +21,28 @@
       { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' }
     ],
     'Outra Sessao': [
-      // Adicione outra sequência de campos aqui
+      { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisExantema"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisVomito"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisNausea"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisDorCostas"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisConjuntivite"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisArtrite"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisArtralgia"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisPetequias"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisLeucopenia"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisProvaLaco"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_sinaisRetroorbital"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasDiabete"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasHematologicas"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasHepatopatias"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasRenal"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasHipertensao"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasAcido"]', value: '2', type: 'select' },
+      { selector: '[name="form:chikungunya_doencasAutoimune"]', value: '2', type: 'select' },
+      { selector: '[name="form:dengue_classificacao"]', value: '2', type: 'select' }
     ]
   };
 
