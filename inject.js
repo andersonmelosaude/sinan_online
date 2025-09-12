@@ -8,8 +8,12 @@
     { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select'},
     { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select'},
     { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 300  },
-    { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
-    { selector: '[name="form:notificacao_paciente_endereco_municipio_id"]', value: '260290', type: 'input' }
+    {
+    selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]',
+    selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]',
+    value: 'CABO DE SANTO AGOSTINHO',
+    type: 'combo'
+  }
   ];
 
   const map = FIELD_MAP.slice(); // clone da lista inicial
@@ -91,7 +95,27 @@
       setTimeout(()=>{
         const el = document.querySelector(f.selector);
         if(!el) return;
-        if(f.type==='select'){ el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); }
+        if(f.type === 'combo') {
+        const field = document.querySelector(f.selectorField);
+        const valueEl = document.querySelector(f.selectorValue);
+        if(!field || !valueEl) return;
+
+        // Preenche o input visível
+        field.value = f.value;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        field.dispatchEvent(new Event('change', { bubbles: true }));
+
+        // Preenche o input de valor interno
+        valueEl.value = f.value;
+        valueEl.dispatchEvent(new Event('input', { bubbles: true }));
+        valueEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+        // Chama a função de validação esperada
+        if(typeof verCampoMunResiVazio === 'function') {
+          verCampoMunResiVazio();
+        }
+
+      } else if(f.type==='select'){ el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); }
         else if('value' in el){ el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true})); }
       }, delay);
       if(f.waitForNext) delay += f.waitForNext;
