@@ -9,7 +9,7 @@
   // --- CONFIG: mapeie campos aqui (querySelector => valor padrão)
   // Exemplo: '#nome' ou 'input[name="email"]' ou '.form-class input[type=text]'
   const FIELD_MAP = {
-    'input[name="firstName"]': 'Anderson',
+    'input[name="form:nuNotificacao"]': '5412240',
     'input[name="lastName"]': 'Melo',
     'input[name="email"]': 'meuemail@example.com',
     'input[name="phone"]': '11999990000'
