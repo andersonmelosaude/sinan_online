@@ -1,20 +1,26 @@
-(function () {
+(function() {
   if (window.__simple_autofill_loaded) { alert('Autofill já ativo'); return; }
   window.__simple_autofill_loaded = true;
 
-  function qsel(el) { return document.querySelector(el); }
-  function createEl(tag, attrs = {}, txt) {
-    const e = document.createElement(tag);
-    for (const k in attrs) e.setAttribute(k, attrs[k]);
-    if (txt) e.textContent = txt;
-    return e;
-  }
+  // ---------- Lista inicial de campos ----------
+  const FIELD_MAP = [
+    { selector: '[name="form:richagravocomboboxField"]', value: '1', type: 'select'},
+    { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select'},
+    { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select'},
+    { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 300  },
+    { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
+    { selector: '[name="form:notificacao_paciente_endereco_municipio_id"]', value: '260290', type: 'input' }
+  ];
 
-  // CSS do painel
-  const css = `
-    #sa-panel{position:fixed;right:12px;top:12px;width:360px;z-index:2147483647;
-      background:#fff;border:1px solid rgba(0,0,0,.12);box-shadow:0 8px 30px rgba(0,0,0,.15);
-      padding:10px;font-family:system-ui,Arial,sans-serif;font-size:13px;border-radius:8px}
+  const map = FIELD_MAP.slice(); // clone da lista inicial
+
+  // ---------- Helpers ----------
+  function createEl(tag, attrs={}, txt){ const e=document.createElement(tag); for(const k in attrs)e.setAttribute(k,attrs[k]); if(txt)e.textContent=txt; return e; }
+
+  // ---------- Painel ----------
+  const style = createEl('style');
+  style.textContent = `
+    #sa-panel{position:fixed;right:12px;top:12px;width:380px;z-index:2147483647;background:#fff;border:1px solid rgba(0,0,0,.12);box-shadow:0 8px 30px rgba(0,0,0,.15);padding:10px;font-family:system-ui,Arial,sans-serif;font-size:13px;border-radius:8px}
     #sa-panel h4{margin:0 0 8px 0;font-size:14px}
     #sa-list{max-height:220px;overflow:auto;border-top:1px solid #eee;padding-top:8px;margin-top:8px}
     .sa-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
@@ -25,9 +31,9 @@
     .sa-small{font-size:12px;color:#666;margin-top:6px}
     .sa-picker-hint{font-size:12px;color:#b33;margin-top:6px}
   `;
-  const style = createEl('style'); style.textContent = css; document.head.appendChild(style);
+  document.head.appendChild(style);
 
-  const panel = createEl('div', { id: 'sa-panel' });
+  const panel = createEl('div',{id:'sa-panel'});
   panel.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:center">
       <h4>AutoFill rápido</h4>
@@ -38,6 +44,7 @@
     <div style="display:flex;gap:8px;margin-top:8px">
       <input id="sa-selector" type="text" placeholder="seletor CSS (ex: input[name=email])" />
       <input id="sa-value" type="text" placeholder="valor padrão" style="width:120px" />
+      <select id="sa-type"><option value="input">input</option><option value="select">select</option></select>
     </div>
     <div style="display:flex;gap:8px;margin-top:8px">
       <button id="sa-add" class="sa-btn">Adicionar</button>
@@ -46,159 +53,104 @@
       <button id="sa-clear" class="sa-btn ghost">Limpar</button>
     </div>
     <div id="sa-list"></div>
-    <div class="sa-small">Dica: use o botão <b>Pegar elemento</b> e clique no campo da página para gerar um seletor básico.</div>
-    <div id="sa-hint" class="sa-picker-hint" style="display:none">Clique no elemento da página para selecioná-lo (Esc para cancelar)</div>
+    <div class="sa-small">Use "Pegar elemento" e clique no campo da página para gerar seletor. Esc para cancelar.</div>
+    <div id="sa-hint" class="sa-picker-hint" style="display:none">Clique no elemento da página</div>
   `;
-
   document.body.appendChild(panel);
 
-  // state
-  const FIELD_MAP = [
-  { selector: '[name="form:nuNotificacao"]', value: '12345' },
-  { selector: '[name="form:data"]', value: '2025-09-12' },
-  { selector: '[name="form:email"]', value: 'teste@example.com' }
-];
-  const map = FIELD_MAP.slice(); // {selector, value}
-  const listEl = document.getElementById('sa-list');
-  const selInput = document.getElementById('sa-selector');
-  const valInput = document.getElementById('sa-value');
+  // ---------- Renderizar lista ----------
+  const listEl=document.getElementById("sa-list");
+  const selInput=document.getElementById("sa-selector");
+  const valInput=document.getElementById("sa-value");
+  const typeSelect=document.getElementById("sa-type");
 
   function renderList() {
     listEl.innerHTML = '';
-    if (map.length === 0) { listEl.innerHTML = '<div class="sa-small" style="padding:8px;color:#666">Nenhum mapeamento ainda</div>'; return; }
-    map.forEach((m, idx) => {
-      const row = createEl('div', { class: 'sa-row' });
-      const s = createEl('input', { type: 'text' }); s.value = m.selector;
-      const v = createEl('input', { type: 'text' }); v.value = m.value;
-      const actions = createEl('div', { class: 'sa-actions' });
-      const btnUpd = createEl('button', { class: 'sa-btn ghost' }, 'Atualizar');
-      const btnDel = createEl('button', { class: 'sa-btn ghost' }, 'Remover');
+    if(map.length===0){ listEl.innerHTML='<div class="sa-small" style="padding:8px;color:#666">Nenhum mapeamento ainda</div>'; return; }
+    map.forEach((m,idx)=>{
+      const row=createEl('div',{class:'sa-row'});
+      const s=createEl('input',{type:'text'}); s.value=m.selector;
+      const v=createEl('input',{type:'text'}); v.value=m.value;
+      const t=createEl('input',{type:'text'}); t.value=m.type; t.style.width='60px';
+      const actions=createEl('div',{class:'sa-actions'});
+      const btnUpd=createEl('button',{class:'sa-btn ghost'},'Atualizar');
+      const btnDel=createEl('button',{class:'sa-btn ghost'},'Remover');
       actions.appendChild(btnUpd); actions.appendChild(btnDel);
-      row.appendChild(s); row.appendChild(v); row.appendChild(actions);
+      row.appendChild(s); row.appendChild(v); row.appendChild(t); row.appendChild(actions);
       listEl.appendChild(row);
 
-      btnUpd.onclick = () => {
-        map[idx].selector = s.value.trim(); map[idx].value = v.value;
-        renderList();
-      };
-      btnDel.onclick = () => { map.splice(idx,1); renderList(); };
+      btnUpd.onclick=()=>{ map[idx].selector=s.value.trim(); map[idx].value=v.value; map[idx].type=t.value; renderList(); };
+      btnDel.onclick=()=>{ map.splice(idx,1); renderList(); };
     });
   }
 
+  // ---------- Preencher campos ----------
   function fillAll() {
-    if (map.length === 0) { alert('Sem campos mapeados'); return; }
-    let found = 0;
-    map.forEach(m => {
-      try {
-        const nodes = document.querySelectorAll(m.selector);
-        if (!nodes || nodes.length === 0) return;
-        nodes.forEach(n => {
-          if ('value' in n) {
-            n.focus();
-            n.value = m.value;
-            // dispatch events to try to trigger frameworks
-            n.dispatchEvent(new Event('input', { bubbles: true }));
-            n.dispatchEvent(new Event('change', { bubbles: true }));
-          } else {
-            n.textContent = m.value;
-          }
-          found++;
-        });
-      } catch (e) {
-        console.warn('Autofill selector error', m.selector, e);
-      }
+    let delay = 0;
+    map.forEach(f=>{
+      setTimeout(()=>{
+        const el = document.querySelector(f.selector);
+        if(!el) return;
+        if(f.type==='select'){ el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); }
+        else if('value' in el){ el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true})); }
+      }, delay);
+      if(f.waitForNext) delay += f.waitForNext;
     });
-    alert('Preenchimento executado. Campos populados: ' + found);
+    setTimeout(()=>alert('Preenchimento executado.'), delay+100);
   }
 
-  function clearAll() {
-    map.forEach(m => {
-      try {
-        const nodes = document.querySelectorAll(m.selector);
-        if (!nodes || nodes.length === 0) return;
-        nodes.forEach(n => {
-          if ('value' in n) {
-            n.focus();
-            n.value = '';
-            n.dispatchEvent(new Event('input', { bubbles: true }));
-            n.dispatchEvent(new Event('change', { bubbles: true }));
-          } else {
-            n.textContent = '';
-          }
-        });
-      } catch (e) { console.warn(e); }
+  function clearAll(){
+    map.forEach(f=>{
+      const el=document.querySelector(f.selector);
+      if(!el) return;
+      if('value' in el){ el.value=''; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true})); }
+      else el.textContent='';
     });
     alert('Campos limpos.');
   }
 
-  document.getElementById('sa-add').onclick = () => {
-    const s = selInput.value.trim(); const v = valInput.value;
-    if (!s) { alert('Informe um seletor CSS'); return; }
-    map.push({ selector: s, value: v });
-    selInput.value = ''; valInput.value = '';
-    renderList();
+  document.getElementById("sa-add").onclick=()=>{
+    const s=selInput.value.trim(); const v=valInput.value; const t=typeSelect.value;
+    if(!s){ alert('Informe um seletor CSS'); return; }
+    map.push({selector:s,value:v,type:t});
+    selInput.value=''; valInput.value=''; renderList();
   };
-  document.getElementById('sa-fill').onclick = fillAll;
-  document.getElementById('sa-clear').onclick = clearAll;
-  document.getElementById('sa-close').onclick = () => { panel.remove(); window.__simple_autofill_loaded = false; style.remove(); };
+  document.getElementById("sa-fill").onclick=fillAll;
+  document.getElementById("sa-clear").onclick=clearAll;
+  document.getElementById("sa-close").onclick=()=>{ panel.remove(); window.__simple_autofill_loaded=false; style.remove(); };
 
-  // Picker
-  let picking = false;
-  const hint = document.getElementById('sa-hint');
-  function cssPath(el) {
-    if (!el) return '';
-    if (el.id) return `#${el.id}`;
-    const parts = [];
-    while (el && el.nodeType === 1 && el !== document.body) {
-      let selector = el.nodeName.toLowerCase();
-      if (el.className) {
-        const cls = String(el.className).trim().split(/\s+/).filter(Boolean)[0];
-        if (cls) selector += `.${cls}`;
-      }
-      const parent = el.parentNode;
-      if (parent) {
-        const siblings = Array.from(parent.children).filter(c => c.nodeName === el.nodeName);
-        if (siblings.length > 1) {
-          const idx = Array.from(parent.children).indexOf(el) + 1;
-          selector += `:nth-child(${idx})`;
-        }
-      }
-      parts.unshift(selector);
-      el = el.parentNode;
+  // ---------- Picker ----------
+  let picking=false; const hint=document.getElementById("sa-hint");
+  function cssPath(el){
+    if(!el) return '';
+    if(el.id) return '#'+el.id;
+    const parts=[];
+    while(el && el.nodeType===1 && el!==document.body){
+      let selector=el.nodeName.toLowerCase();
+      if(el.className){ const cls=String(el.className).trim().split(/\s+/).filter(Boolean)[0]; if(cls) selector+='.'+cls; }
+      const parent=el.parentNode;
+      if(parent){ const siblings=Array.from(parent.children).filter(c=>c.nodeName===el.nodeName); if(siblings.length>1){ const idx=Array.from(parent.children).indexOf(el)+1; selector+=`:nth-child(${idx})`; } }
+      parts.unshift(selector); el=el.parentNode;
     }
     return parts.join(' > ');
   }
-
-  function startPicker() {
-    if (picking) return;
-    picking = true; hint.style.display = 'block';
-    document.body.style.cursor = 'crosshair';
-    function onMove(ev) {
+  function startPicker(){
+    if(picking) return;
+    picking=true; hint.style.display='block'; document.body.style.cursor='crosshair';
+    function onMove(ev){ ev.preventDefault(); ev.stopPropagation(); }
+    function onClick(ev){
       ev.preventDefault(); ev.stopPropagation();
+      const el=ev.target; const sel=cssPath(el);
+      selInput.value=sel || prompt('Seletor não gerado') || '';
+      picking=false; hint.style.display='none'; document.body.style.cursor='';
+      document.removeEventListener('click',onClick,true);
+      document.removeEventListener('mousemove',onMove,true);
     }
-    function onClick(ev) {
-      ev.preventDefault(); ev.stopPropagation();
-      const el = ev.target;
-      const sel = cssPath(el);
-      selInput.value = sel || prompt('Seletor não gerado. Digite seletor CSS:') || '';
-      picking = false; hint.style.display = 'none'; document.body.style.cursor = '';
-      document.removeEventListener('click', onClick, true);
-      document.removeEventListener('mousemove', onMove, true);
-    }
-    function onKey(e) {
-      if (e.key === 'Escape') {
-        picking = false; hint.style.display = 'none'; document.body.style.cursor = '';
-        document.removeEventListener('click', onClick, true);
-        document.removeEventListener('mousemove', onMove, true);
-        window.removeEventListener('keydown', onKey);
-      }
-    }
-    document.addEventListener('click', onClick, true);
-    document.addEventListener('mousemove', onMove, true);
-    window.addEventListener('keydown', onKey);
+    function onKey(e){ if(e.key==='Escape'){ picking=false; hint.style.display='none'; document.body.style.cursor=''; document.removeEventListener('click',onClick,true); document.removeEventListener('mousemove',onMove,true); window.removeEventListener('keydown',onKey); } }
+    document.addEventListener('click',onClick,true); document.addEventListener('mousemove',onMove,true); window.addEventListener('keydown',onKey);
   }
-  document.getElementById('sa-pick').onclick = startPicker;
+  document.getElementById("sa-pick").onclick=startPicker;
 
-  // initial render
+  // ---------- Render inicial ----------
   renderList();
 })();
