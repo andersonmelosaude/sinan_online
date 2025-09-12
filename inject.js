@@ -145,5 +145,5 @@
   };
 
   document.getElementById('sa-fill').onclick = fillAll;
-  document.getElementById('sa-close').onclick = panel.innerHTML='';
+  //document.getElementById('sa-close').onclick = panel.innerHTML='';
 })();
