@@ -3,7 +3,7 @@
   - Múltiplas sessões/abas de preenchimento
   - Painel de edição visível apenas ao clicar na engrenagem
   - Auto preencher sempre disponível
-  - Selects dependentes e combo box com blur/Ajax
+  - Selects dependentes, combo box e inputs com valor fixo ou variável
 */
 
 (function(){
@@ -12,38 +12,35 @@
 
   const SESSIONS = {
     'Default': [
-      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'input' },
-      { selector: '[name="form:richagravocomboboxField"]', value: 'A90 - DENGUE', type: 'combo' },
+      { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' },
+      { selector: '[name="form:richagravocomboboxField"]', value: '1', type: 'select' },
       { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
-      { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true },
-      { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
-      { selector: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'input' },
-      { selectorField: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxField"]', selectorValue: '[name="form:notificacao_paciente_endereco_municipio_noMunicipiocomboboxValue"]', value: 'CABO DE SANTO AGOSTINHO', type: 'combo' }
+      { selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 500, triggerBlur: true }
     ],
-    'Outra Sessao': [
-      { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisExantema"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisVomito"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisNausea"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisDorCostas"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisConjuntivite"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisArtrite"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisArtralgia"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisPetequias"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisLeucopenia"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisProvaLaco"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_sinaisRetroorbital"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasDiabete"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasHematologicas"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasHepatopatias"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasRenal"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasHipertensao"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasAcido"]', value: '2', type: 'select' },
-      { selector: '[name="form:chikungunya_doencasAutoimune"]', value: '2', type: 'select' },
-      { selector: '[name="form:dengue_classificacao"]', value: '2', type: 'select' }
+    'Chikungunya': [
+      { selector: '[name="form:chikungunya_sinaisFebre"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisMialgia"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisCefaleia"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisExantema"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisVomito"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisNausea"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisDorCostas"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisConjuntivite"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisArtrite"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisArtralgia"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisPetequias"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisLeucopenia"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisProvaLaco"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_sinaisRetroorbital"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasDiabete"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasHematologicas"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasHepatopatias"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasRenal"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasHipertensao"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasAcido"]', value: '2', type: 'input' },
+      { selector: '[name="form:chikungunya_doencasAutoimune"]', value: '2', type: 'input' },
+      { selector: '[name="form:dengue_classificacao"]', value: '2', type: 'input' }
     ]
   };
 
@@ -93,7 +90,7 @@
       row.appendChild(s); row.appendChild(v); row.appendChild(t); row.appendChild(actions);
       listEl.appendChild(row);
 
-      btnUpd.onclick=()=>{if(m.type==='combo'){map[idx].selectorField=s.value;}else{map[idx].selector=s.value;}map[idx].value=v.value; map[idx].type=t.value; SESSIONS[currentSession] = map.slice(); renderList();};
+      btnUpd.onclick=()=>{map[idx].selector=s.value; map[idx].value=v.value; map[idx].type=t.value; SESSIONS[currentSession] = map.slice(); renderList();};
       btnDel.onclick=()=>{map.splice(idx,1); SESSIONS[currentSession] = map.slice(); renderList();};
     });
   }
@@ -102,45 +99,29 @@
     let delay=0;
     map.forEach(f=>{
       setTimeout(()=>{
+        const el=document.querySelector(f.selector||f.selectorField);
+        if(!el) return;
         if(f.type==='combo'){
-          const field=document.querySelector(f.selectorField);
           const valueEl=document.querySelector(f.selectorValue);
-          if(!field||!valueEl) return;
-          field.value=f.value;
-          field.dispatchEvent(new Event('input',{bubbles:true}));
-          field.dispatchEvent(new Event('change',{bubbles:true}));
-          valueEl.value=f.value;
-          valueEl.dispatchEvent(new Event('input',{bubbles:true}));
-          valueEl.dispatchEvent(new Event('change',{bubbles:true}));
-          if(typeof verCampoMunResiVazio==='function'){verCampoMunResiVazio();}
-        }else if(f.type==='select'){
-          const el=document.querySelector(f.selector); if(!el) return;
-          el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true}));
-          el.dispatchEvent(new Event('input',{bubbles:true}));
-          if(f.triggerBlur){
-            el.dispatchEvent(new Event('blur',{bubbles:true}));
-          }
-        }else{
-          const el=document.querySelector(f.selector); if(!el) return;
+          if(!valueEl) return;
+          el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
+          valueEl.value=f.value; valueEl.dispatchEvent(new Event('input',{bubbles:true})); valueEl.dispatchEvent(new Event('change',{bubbles:true}));
+        } else if(f.type==='select'){
+          el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); el.dispatchEvent(new Event('input',{bubbles:true}));
+          if(f.triggerBlur){ el.dispatchEvent(new Event('blur',{bubbles:true})); }
+        } else {
           el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
         }
       },delay);
       if(f.waitForNext) delay+=f.waitForNext;
     });
+    setTimeout(()=>alert('Preenchimento executado.'),delay+100);
   }
 
-  sessionSelect.onchange = ()=>{
-    currentSession = sessionSelect.value;
-    map = SESSIONS[currentSession].slice();
-    if(panelVisible) renderList();
-  };
+  sessionSelect.onchange = ()=>{currentSession = sessionSelect.value; map = SESSIONS[currentSession].slice(); if(panelVisible) renderList();};
 
   const gearBtn = document.getElementById('sa-gear');
-  gearBtn.onclick = ()=>{
-    panelVisible = !panelVisible;
-    listEl.style.display = panelVisible ? 'block' : 'none';
-    if(panelVisible) renderList();
-  };
+  gearBtn.onclick = ()=>{panelVisible = !panelVisible; listEl.style.display = panelVisible ? 'block' : 'none'; if(panelVisible) renderList();};
 
   document.getElementById('sa-fill').onclick = fillAll;
 })();
