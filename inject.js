@@ -128,7 +128,7 @@
       },delay);
       if(f.waitForNext) delay+=f.waitForNext;
     });
-    setTimeout(()=>alert('Preenchimento executado.'),delay+100);
+    //setTimeout(()=>alert('Preenchimento executado.'),delay+100);
   }
 
   sessionSelect.onchange = ()=>{
