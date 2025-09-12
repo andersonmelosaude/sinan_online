@@ -4,10 +4,10 @@
 
   // ---------- Lista inicial de campos ----------
   const FIELD_MAP = [
-    { selector: '[name="form:tipo"]', value: '1', type: 'select', waitForNext: 300 },
-    { selector: '[name="form:subtipo"]', value: 'A', type: 'select' },
-    { selector: '[name="form:nuNotificacao"]', value: '12345', type: 'input' },
-    { selector: '[name="form:email"]', value: 'teste@example.com', type: 'input' }
+    { selector: '[name="form:richagravocomboboxField"]', value: '1', type: 'select' },
+{ selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
+{ selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
+{ selector: '[name="form:notificacao_paciente_endereco_municipio_uf_id"]', value: '16', type: 'select', waitForNext: 300 }
   ];
 
   const map = FIELD_MAP.slice(); // clone da lista inicial
