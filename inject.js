@@ -55,7 +55,8 @@
       { selector: '[name="form:chikungunya_doencasHipertensao"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_doencasAcido"]', value: '2', type: 'input' },
       { selector: '[name="form:chikungunya_doencasAutoimune"]', value: '2', type: 'input' },
-      { selector: '[name="form:dengue_classificacao"]', value: '2', type: 'input' }
+      { selector: '[name="form:dengue_classificacao"]', value: '2', type: 'input' },
+      { selector: '[name="form:dengue_hospitalizacao"]', value: '2', type: 'select' }
     ]
   };
 
