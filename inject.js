@@ -12,8 +12,10 @@
 
   const SESSIONS = {
     'Default': [
-      { selector: '[name="form:notificacao_unidadeSaude_coCnes"]', value: '0000019', type: 'input' },
       { selector: '[name="form:notificacao_unidadeSaude_estabelecimentocomboboxField"]', value: 'POLICLINICA DR JAMACI DE MEDEIROS', type: 'input' },
+      { selector: '[name="form:notificacao_unidadeSaude_estabelecimentocomboboxField"]', value: 'POLICLINICA DR JAMACI DE MEDEIROS', type: 'select' },
+      { selector: '[name="form:notificacao_unidadeSaude_coCnes"]', value: '0000019', type: 'input' },
+      
       { selector: '[name="form:notificacao_unidadeSaude_coCnes"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_raca"]', value: '4', type: 'select' },
       { selector: '[name="form:notificacao_paciente_escolaridade"]', value: '9', type: 'select' },
