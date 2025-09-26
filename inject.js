@@ -58,10 +58,10 @@
     ]
   };
 
-  let currentSession = 'Default';
+  let currentSession = 'Sintomas';
   let map = SESSIONS[currentSession].slice();
-  let map1 = SESSIONS[0].slice();
-  let map2 = SESSIONS[1].slice();
+  let map1 = SESSIONS['Default'].slice();
+  let map2 = SESSIONS['Sintomas'].slice();
 
   function createEl(tag, attrs={}, txt){
     const e=document.createElement(tag);
