@@ -60,6 +60,8 @@
 
   let currentSession = 'Default';
   let map = SESSIONS[currentSession].slice();
+  let map1 = SESSIONS[0].slice();
+  let map2 = SESSIONS[1].slice();
 
   function createEl(tag, attrs={}, txt){
     const e=document.createElement(tag);
@@ -76,6 +78,7 @@
   panel.innerHTML = `
     <div id='sa-header'>
       <button id='sa-fill' class='sa-btn'>Auto Preencher</button>
+      <button id='sa-sintomas' class='sa-btn'>Sintomas</button>
       <select id='sa-session'>${Object.keys(SESSIONS).map(s=>`<option value='${s}'>${s}</option>`).join('')}</select>
       <button id='sa-gear' class='sa-btn ghost'>⚙</button>
       <button id='sa-close' class='sa-btn ghost'>✖</button>
@@ -133,6 +136,52 @@
     //setTimeout(()=>alert('Preenchimento executado.'),delay+100);
   }
 
+  function fill(){
+    let delay=0;
+    map1.forEach(f=>{
+      setTimeout(()=>{
+        const el=document.querySelector(f.selector||f.selectorField);
+        if(!el) return;
+        if(f.type==='combo'){
+          const valueEl=document.querySelector(f.selectorValue);
+          if(!valueEl) return;
+          el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
+          valueEl.value=f.value; valueEl.dispatchEvent(new Event('input',{bubbles:true})); valueEl.dispatchEvent(new Event('change',{bubbles:true}));
+        } else if(f.type==='select'){
+          el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); el.dispatchEvent(new Event('input',{bubbles:true}));
+          if(f.triggerBlur){ el.dispatchEvent(new Event('blur',{bubbles:true})); }
+        } else {
+          el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      },delay);
+      if(f.waitForNext) delay+=f.waitForNext;
+    });
+    //setTimeout(()=>alert('Preenchimento executado.'),delay+100);
+  }
+
+  function sintomas(){
+    let delay=0;
+    map2.forEach(f=>{
+      setTimeout(()=>{
+        const el=document.querySelector(f.selector||f.selectorField);
+        if(!el) return;
+        if(f.type==='combo'){
+          const valueEl=document.querySelector(f.selectorValue);
+          if(!valueEl) return;
+          el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
+          valueEl.value=f.value; valueEl.dispatchEvent(new Event('input',{bubbles:true})); valueEl.dispatchEvent(new Event('change',{bubbles:true}));
+        } else if(f.type==='select'){
+          el.value=f.value; el.dispatchEvent(new Event('change',{bubbles:true})); el.dispatchEvent(new Event('input',{bubbles:true}));
+          if(f.triggerBlur){ el.dispatchEvent(new Event('blur',{bubbles:true})); }
+        } else {
+          el.value=f.value; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      },delay);
+      if(f.waitForNext) delay+=f.waitForNext;
+    });
+    //setTimeout(()=>alert('Preenchimento executado.'),delay+100);
+  }
+
   sessionSelect.onchange = ()=>{currentSession = sessionSelect.value; map = SESSIONS[currentSession].slice(); if(panelVisible) renderList();};
 
   const gearBtn = document.getElementById('sa-gear');
@@ -143,5 +192,6 @@
       window.__simple_autofill_loaded = false; // permite reinicializar se quiser
   };
 
-  document.getElementById('sa-fill').onclick = fillAll;
+  document.getElementById('sa-fill').onclick = fill;
+  document.getElementById('sa-sintomas').onclick = sintomas;
 })();
